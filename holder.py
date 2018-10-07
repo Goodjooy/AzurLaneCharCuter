@@ -26,6 +26,8 @@ class CutSpace(object):
             cut = pic.rotate(-90)
             cut = pic.crop(cut_sp)
 
+
+
         else:
             cut = pic.crop(cut_sp)
 
@@ -66,8 +68,9 @@ def body_cut(name):
     space = {'body_part': {}}
     loader = CutSpace()
     in_part = None
+    differ = []
 
-    with open("TextAsset\\" + name + ".atlas.txt", 'r')as info:
+    with open("TextAsset\\" + name + ".atlas.txt", 'r', encoding='utf-8')as info:
         for line in info.readlines():
 
             line = line[:-1]
@@ -101,7 +104,11 @@ def body_cut(name):
             else:
                 if line[0] != ' ':
                     in_part = line
+                    #try:
                     space['body_part'][line] = None
+                    #except UnicodeDecodeError:
+                    #    return "TextAsset\\" + name + ".atlas.txt"
+
                     loader.all_to_0()
 
                 elif line[0] == ' ':
@@ -148,9 +155,11 @@ def body_cut(name):
             continue
 
         else:
-
-            space['body_part'][key][0].save("out\\" + name + "\\" + key + ".png")
+            try:
+                space['body_part'][key][0].save("out\\" + name + "\\" + key + ".png")
+            except FileNotFoundError:
+                space['body_part'][key][0].save("out\\" + name + "\\" + str(i) + ".png")
 
         i += 1
 
-    return True
+    return ""
