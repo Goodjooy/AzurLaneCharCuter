@@ -3,6 +3,7 @@ import time
 
 import holder as ch
 
+differ = []
 try:
     os.makedirs("texture2D")
 except FileExistsError:
@@ -35,12 +36,14 @@ for text in text_:
 
 for name in texture2D:
     if name not in textAsset:
-        print("切分文件丢失，请添加【"+name+".atlas.txt】至TextAsset文件夹" )
+        print("切分文件丢失，请添加【" + name + ".atlas.txt】至TextAsset文件夹")
     else:
-        if ch.body_cut(name):
+        differ.append( ch.body_cut(name))
 
-            print(f'完成一个，为{name}')
+        print(f'完成一个，为{name}')
 
 print("完成，将于15s后关闭")
+
+
 
 time.sleep(15)
